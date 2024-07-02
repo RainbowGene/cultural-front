@@ -43,6 +43,11 @@ const router = createRouter({
           name: "系统用户",
           component: () => import("@/views/setting/UserList.vue"),
         },
+        {
+          path: "/content/column",
+          name: "栏目管理",
+          component: () => import("@/views/content/ColumnList.vue"),
+        },
       ],
     },
   ],

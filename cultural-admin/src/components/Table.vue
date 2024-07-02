@@ -6,6 +6,7 @@
       :height="tableHeight"
       :stripe="options.stripe"
       :border="options.border"
+      :row-key="rowKey"
       header-row-class-name="table-header-row"
       highlight-current-row
       @row-click="handleRowClick"
@@ -98,6 +99,7 @@ const props = defineProps({
       showIndex: false,
     },
   },
+  rowKey:String, // 子列需要的key
   columns: Array,
   fetch: Function, // 获取数据的函数
   initFetch: {

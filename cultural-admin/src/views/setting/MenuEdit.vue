@@ -55,9 +55,9 @@
             v-model="formData.menuUrl"
           ></el-input>
         </el-form-item>
-        <el-form-item label="权限编码" prop="permissionCode">
+        <el-form-item label="权限编码" prop="permission">
           <el-input
-            v-model="formData.permissionCode"
+            v-model="formData.permission"
             :maxlength="50"
             clearable
           ></el-input>

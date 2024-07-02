@@ -1,79 +1,74 @@
 <template>
-  <div>
-    <el-upload
-      name="file"
-      :multiple="false"
-      accep=".png,.PNG,.jpg,.JPG,.jepg,.gif,.GIF,.bmp,.BMP"
-      :http-request="uploadImg"
-    >
-      <div
-        class="cover-upload-btn"
-        :style="{ width: width + 'px', height: height + 'px' }"
-      >
-        <template v-if="modelValue">
-          <img :src="proxy.globalInfo.imageUrl + modelValue" alt="" />
-        </template>
-        <template v-else>
-          <span class="iconfont icon-jiahao1"></span>
-        </template>
-      </div>
-    </el-upload>
-  </div>
+  <el-upload
+    name="file"
+    :show-file-list="false"
+    accept=".png,.PNG,.jpg,.JPG,.jpeg,.JPEG,.gif,.GIF,.bmp,.BMP"
+    :multiple="false"
+    :http-request="uploadImage"
+  >
+    <div class="cover-upload-btn">
+      <template v-if="localPreview">
+        <img :src="localFile" />
+      </template>
+      <template v-else>
+        <img
+          :src="
+            (imageUrlPrefix ? imageUrlPrefix : proxy.globalInfo.imageUrl) +
+            modelValue.imageUrl
+          "
+          v-if="modelValue && modelValue.imageUrl"
+        />
+        <!-- <img
+          :src="
+            (imageUrlPrefix ? imageUrlPrefix : proxy.globalInfo.imageUrl) +
+            (modelValue.imageUrl ? modelValue.imageUrl : modelValue)
+          "
+          v-if="modelValue || modelValue.imageUrl"
+        /> -->
+        <span class="iconfont icon-add" v-else></span>
+      </template>
+    </div>
+  </el-upload>
 </template>
 
 <script setup>
-import { ref, reactive, getCurrentInstance, nextTick } from "vue";
+import { ref, getCurrentInstance, onMounted } from "vue";
 const { proxy } = getCurrentInstance();
-
-const api = {
-  uploadFile: "/file/uploadFile",
-};
-
 const props = defineProps({
-  width: {
-    type: Number,
-    default: 150,
-  },
-  height: {
-    type: Number,
-    default: 150,
+  imageUrlPrefix: {
+    type: String,
   },
   modelValue: {
-    type: String,
+    type: Object,
     default: null,
-  },
-  type: {
-    // 不同地方使用类型不同
-    type: Number,
   },
 });
 
+const localPreview = ref(false);
+const localFile = ref();
 const emit = defineEmits();
-const uploadImg = async (file) => {
+const uploadImage = async (file) => {
   file = file.file;
-  let result = await proxy.Request({
-    url: api.uploadFile,
-    params: {
-      file,
-      type: props.type,
-    },
-  });
-  if (!result) {
-    return;
-  }
-  emit("update:modelValue", result.data);  // 返回路径
+  let img = new FileReader();
+  img.readAsDataURL(file);
+  img.onload = ({ target }) => {
+    localFile.value = target.result; //将img转化为二进制数据
+  };
+  localPreview.value = true;
+  emit("update:modelValue", file);
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .cover-upload-btn {
+  background: url(../assets/cover_bg.png);
+  width: 150px;
+  height: 150px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f1f1f1;
-  overflow: hidden;
   .iconfont {
-    font-size: 40px;
+    font-size: 50px;
     color: rgb(164, 164, 164);
   }
   img {

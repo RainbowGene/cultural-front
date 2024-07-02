@@ -5,24 +5,13 @@
         <el-form :model="searchForm" label-width="70px" label-position="right">
           <el-row>
             <el-col :span="7">
-              <el-form-item label="用户名">
+              <el-form-item label="栏目名">
                 <el-input
                   clearable
                   placeholder="支持模糊搜索"
-                  v-model.trim="searchForm.userNameFuzzy"
+                  v-model.trim="searchForm.columnNameFuzzy"
                   @keyup.enter.native="loadDataList"
                   class="password-input"
-                ></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="7">
-              <el-form-item label="手机号">
-                <el-input
-                  class="password-input"
-                  clearable
-                  placeholder="支持模糊搜索"
-                  v-model.trim="searchForm.phoneFuzzy"
-                  @keyup.enter.native="loadDataList"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -31,8 +20,8 @@
               <el-button
                 type="primary"
                 @click="showEdit()"
-                v-has="proxy.PermissionCode.account.edit"
-                >新增用户</el-button
+                v-has="proxy.PermissionCode.column.edit"
+                >新增栏目</el-button
               >
             </el-col>
           </el-row>
@@ -41,7 +30,7 @@
     </div>
     <el-card class="table-data-card">
       <template #header>
-        <span>用户列表</span>
+        <span>栏目列表</span>
       </template>
       <Table
         ref="tableInfoRef"
@@ -50,87 +39,118 @@
         :dataSource="tableData"
         :options="tableOptions"
         :extHeight="tableOptions.extHeight"
+        rowKey="columnId"
       >
         <template #slotStatus="{ index, row }">
           <span :class="row.status ? 'text-green' : 'text-red'">{{
-            row.status ? "启用" : "禁用"
+            row.status ? "已启用" : "已隐藏"
           }}</span>
         </template>
         <template #slotOperation="{ index, row }">
-          <div
-            class="row-op-panel"
-            v-if="!(userInfo.superAdmin && userInfo.userId == row.userId)"
-          >
+          <div class="row-op-panel">
             <a
               class="a-link"
               href="javascript:void(0)"
               @click.prevent="showEdit(row)"
-              v-has="proxy.PermissionCode.account.edit"
+              v-has="proxy.PermissionCode.column.edit"
               >修改</a
-            >
-            <a
-              v-has="proxy.PermissionCode.account.updatePwd"
-              class="a-link"
-              href="javascript:void(0)"
-              @click.prevent="updateAccountPwd(row)"
-              >修改密码</a
             >
             <a
               :class="!row.status ? 'text-green' : 'text-red'"
               @click.prevent="changeAccountStatus(row)"
-              v-has="proxy.PermissionCode.account.updateStatus"
-              >{{ !row.status ? "启用" : "禁用" }}</a
+              v-has="proxy.PermissionCode.column.updateStatus"
+              >{{ !row.status ? "启用" : "隐藏" }}</a
             >
-            <a
+            <!-- <a
               class="a-link"
               href="javascript:void(0)"
-              @click.prevent="delAccount(row)"
-              v-has="proxy.PermissionCode.account.del"
+              @click.prevent="delColumn(row)"
+              v-has="proxy.PermissionCode.column.del"
               >删除</a
-            >
+            > -->
           </div>
         </template>
       </Table>
+      <!-- <el-table
+        :data="mockData"
+        style="width: 100%; margin-bottom: 20px"
+        row-key="columnId"
+        default-expand-all
+      >
+        <el-table-column prop="columnId" label="ID" />
+        <el-table-column prop="columnName" label="栏目名" />
+        <el-table-column prop="status" label="状态" />
+      </el-table> -->
     </el-card>
     <!-- 新增/修改 -->
-    <UserEdit ref="userEditRef" @reload="loadDataList"></UserEdit>
-    <UserPasswordEdit ref="userPasswordEditRef"></UserPasswordEdit>
+    <ColumnEdit ref="ColumnEditRef" @reload="loadDataList"></ColumnEdit>
   </div>
 </template>
 
 <script setup>
-// import Table from "@/components/Table.vue"; // 已经全局引入了
-import UserEdit from "./UserEdit.vue";
-import UserPasswordEdit from "./UserPasswordEdit.vue";
+import { table } from "suneditor/src/plugins";
+import ColumnEdit from "./ColumnEdit.vue";
 import { ref, reactive, getCurrentInstance, nextTick } from "vue";
 const { proxy } = getCurrentInstance();
 
 const api = {
-  loadDataList: "/settings/loadAccountList",
-  delAccount: "/settings/delAccount",
-  updateStatus: "/settings/updateStatus",
+  columnList: "/content/columnList",
+  saveColumn: "/content/saveColumn",
+  delColumn: "/content/delColumn",
+  opColStatus: "/content/opColStatus",
+  changeSort: "/content/changeSort",
 };
 
-// 用于权限控制
-const userInfo = ref(
-  JSON.parse(sessionStorage.getItem("userInfo")) || { menuList: [] }
-);
-
 const searchForm = ref({});
-const tableData = ref({});
+const tableData = ref({ list: [] });
 const tableOptions = ref({
   extHeight: 125,
 });
 
+// const mockData = {
+//   list: [
+//     {
+//       columnId: 1,
+//       columnName: "栏目1",
+//       status: 1,
+//     },
+//     {
+//       columnId: 2,
+//       columnName: "栏目2",
+//       status: 1,
+//       children: [
+//         {
+//           columnId: 4,
+//           columnName: "栏目4",
+//           status: 1,
+//         },
+//       ],
+//     },
+//     {
+//       columnId: 3,
+//       columnName: "栏目3",
+//       status: 1,
+//     },
+//   ],
+// };
+
 const columns = [
-  { label: "用户名", prop: "userName", width: 150 },
-  { label: "手机", prop: "phone", width: 180 },
-  { label: "拥有角色", prop: "roleNames", width: 150 },
-  { label: "创建时间", prop: "createTime" },
-  { label: "状态", prop: "status", width: 100, scopedSlots: "slotStatus" },
+  {
+    label: "ID",
+    prop: "columnId",
+    width: 80,
+  },
+  //   {
+  //     label: "封面",
+  //     prop: "columnCover",
+  //     scopedSlots: "imgPathSlot",
+  //     width: 150,
+  //   },
+  { label: "栏目名称", prop: "columnName" },
+  { label: "状态", prop: "status", scopedSlots: "slotStatus" },
   {
     label: "操作",
-    prop: "operation",
+    prop: "type",
     width: 200,
     scopedSlots: "slotOperation",
   },
@@ -144,24 +164,25 @@ const loadDataList = async () => {
   };
   Object.assign(params, searchForm.value);
   let result = await proxy.Request({
-    url: api.loadDataList,
+    url: api.columnList,
     params,
   });
   if (!result) {
     return;
   }
-  Object.assign(tableData.value, result.data);
+  //   Object.assign(tableData.value, result.data);
+  tableData.value.list = result.data;
 };
 
 // 修改状态
 const changeAccountStatus = (data) => {
   let status = data.status == 0 ? 1 : 0;
   let info = status == 0 ? "禁用" : "启用";
-  proxy.Confirm(`确定要${info + data.userName}吗？`, async () => {
+  proxy.Confirm(`确定要${info + data.columnName}吗？`, async () => {
     let result = await proxy.Request({
-      url: api.updateStatus,
+      url: api.opColStatus,
       params: {
-        userId: data.userId,
+        columnId: data.columnId,
         status: status,
       },
     });
@@ -173,13 +194,13 @@ const changeAccountStatus = (data) => {
   });
 };
 
-// 删除角色
-const delAccount = (data) => {
-  proxy.Confirm(`确定要删除${data.userName}吗？`, async () => {
+// 删除栏目
+const delColumn = (data) => {
+  proxy.Confirm(`确定要删除${data.columnName}吗？`, async () => {
     let result = await proxy.Request({
-      url: api.delAccount,
+      url: api.delColumn,
       params: {
-        userId: data.userId,
+        columnId: data.columnId,
       },
     });
     if (!result) {
@@ -190,14 +211,9 @@ const delAccount = (data) => {
   });
 };
 
-const userEditRef = ref();
+const ColumnEditRef = ref();
 const showEdit = (data = {}) => {
-  userEditRef.value.showEdit(Object.assign({}, data));
-};
-
-const userPasswordEditRef = ref();
-const updateAccountPwd = (data = {}) => {
-  userPasswordEditRef.value.showEdit(Object.assign({}, data));
+  ColumnEditRef.value.showEdit(Object.assign({}, data));
 };
 </script>
 

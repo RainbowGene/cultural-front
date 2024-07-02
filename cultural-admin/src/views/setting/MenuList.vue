@@ -89,7 +89,7 @@
                 {{ detailData.menuUrl ? detailData.menuUrl : "-" }}
               </el-form-item>
               <el-form-item label="权限编码:">
-                {{ detailData.permissionCode }}
+                {{ detailData.permission }}
               </el-form-item>
               <el-form-item label="菜单图标:">
                 <span
@@ -163,6 +163,7 @@ const nodeClick = (data, node) => {
   getMenuNames(node, menuNames);
   data.menuNames = menuNames;
   Object.assign(detailData.value, data);
+  console.log(detailData.value);
 };
 
 const getMenuNames = (node, menuNames) => {

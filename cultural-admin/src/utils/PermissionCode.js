@@ -13,9 +13,11 @@ const PermissionCode = {
     updatePwd: "settings_account_update_password",
     updateStatus: "settings_account_op_status",
   },
-  category: {
-    edit: "category_edit",
-    del: "category_del",
+  column: {
+    edit: "content_col_edit",
+    del: "content_col_del",
+    updateStatus: "content_col_op_status",
+    list:"content_col_list",
   },
   question: {
     edit: "question_edit",
