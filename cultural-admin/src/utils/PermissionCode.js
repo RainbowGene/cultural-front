@@ -19,19 +19,15 @@ const PermissionCode = {
     updateStatus: "content_col_op_status",
     list:"content_col_list",
   },
-  question: {
-    edit: "question_edit",
-    import: "question_import",
-    post: "question_post",
-    del: "question_del",
-    del_batch: "question_del_batch",
+  area: {
+    edit: "content_area_edit",
+    del: "content_area_del",
+    list:"content_area_list",
   },
-  examQuestion: {
-    edit: "exam_question_edit",
-    import: "exam_question_import",
-    post: "exam_question_post",
-    del: "exam_question_del",
-    del_batch: "exam_question_del_batch",
+  tag: {
+    edit: "content_tag_edit",
+    del: "content_tag_del",
+    list:"content_tag_list",
   },
   share: {
     edit: "share_edit",

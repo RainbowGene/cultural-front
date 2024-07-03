@@ -48,6 +48,16 @@ const router = createRouter({
           name: "栏目管理",
           component: () => import("@/views/content/ColumnList.vue"),
         },
+        {
+          path: "/content/area",
+          name: "园区管理",
+          component: () => import("@/views/content/AreaList.vue"),
+        },
+        {
+          path: "/content/tag",
+          name: "标签管理",
+          component: () => import("@/views/content/TagList.vue"),
+        },
       ],
     },
   ],

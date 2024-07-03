@@ -4,7 +4,7 @@
       <el-card class="box-card">
         <el-form :model="searchForm" label-width="70px" label-position="right">
           <el-row>
-            <el-col :span="7">
+            <!-- <el-col :span="7">
               <el-form-item label="栏目名">
                 <el-input
                   clearable
@@ -14,9 +14,9 @@
                   class="password-input"
                 ></el-input>
               </el-form-item>
-            </el-col>
+            </el-col> -->
             <el-col :span="6" :style="{ paddingLeft: '10px' }">
-              <el-button type="success" @click="loadDataList()">查询</el-button>
+              <!-- <el-button type="success" @click="loadDataList()">查询</el-button> -->
               <el-button
                 type="primary"
                 @click="showEdit()"
@@ -61,13 +61,13 @@
               v-has="proxy.PermissionCode.column.updateStatus"
               >{{ !row.status ? "启用" : "隐藏" }}</a
             >
-            <!-- <a
+            <a
               class="a-link"
               href="javascript:void(0)"
               @click.prevent="delColumn(row)"
               v-has="proxy.PermissionCode.column.del"
               >删除</a
-            > -->
+            >
           </div>
         </template>
       </Table>
@@ -88,7 +88,6 @@
 </template>
 
 <script setup>
-import { table } from "suneditor/src/plugins";
 import ColumnEdit from "./ColumnEdit.vue";
 import { ref, reactive, getCurrentInstance, nextTick } from "vue";
 const { proxy } = getCurrentInstance();
