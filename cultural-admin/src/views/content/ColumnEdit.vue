@@ -146,7 +146,6 @@ const submitForm = async () => {
     params.cover = formData.value.iconPath;
     params.status = 1; // 栏目状态为 启动
     delete params.iconPath;
-    console.log(params);
     let result = await proxy.Request({
       url: api.saveColumn,
       params,

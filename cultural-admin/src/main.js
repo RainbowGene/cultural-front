@@ -24,6 +24,8 @@ import AreaSelect from "@/components/content/AreaSelect.vue";
 import SunEditor from "@/components/content/SunEditor.vue";
 import ImportData from "@/components/content/ImportData.vue";
 import Badge from "@/components/Badge.vue";
+import EditorHtml from "@/components/EditorHtml.vue";
+import EditorMarkdown from "@/components/EditorMarkdown.vue";
 
 const app = createApp(App);
 
@@ -41,6 +43,8 @@ app.component("AreaSelect", AreaSelect);
 app.component("SunEditor", SunEditor);
 app.component("Badge", Badge);
 app.component("ImportData", ImportData);
+app.component("EditorHtml", EditorHtml);
+app.component("EditorMarkdown", EditorMarkdown);
 
 //配置全局变量
 app.config.globalProperties.Request = Request;

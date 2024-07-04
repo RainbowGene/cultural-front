@@ -58,6 +58,11 @@ const router = createRouter({
           name: "标签管理",
           component: () => import("@/views/content/TagList.vue"),
         },
+        {
+          path: "/post/article",
+          name: "文章管理",
+          component: () => import("@/views/post/ArticleList.vue"),
+        },
       ],
     },
   ],

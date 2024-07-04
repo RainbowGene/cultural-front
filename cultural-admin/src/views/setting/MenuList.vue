@@ -163,7 +163,6 @@ const nodeClick = (data, node) => {
   getMenuNames(node, menuNames);
   data.menuNames = menuNames;
   Object.assign(detailData.value, data);
-  console.log(detailData.value);
 };
 
 const getMenuNames = (node, menuNames) => {

@@ -5,11 +5,11 @@
         <el-form :model="searchForm" label-width="70px" label-position="right">
           <el-row>
             <el-col :span="7">
-              <el-form-item label="标签名">
+              <el-form-item label="标题">
                 <el-input
                   clearable
                   placeholder="支持模糊搜索"
-                  v-model.trim="searchForm.tagNameFuzzy"
+                  v-model.trim="searchForm.titleFuzzy"
                   @keyup.enter.native="loadDataList"
                   class="password-input"
                 ></el-input>
@@ -20,8 +20,8 @@
               <el-button
                 type="primary"
                 @click="showEdit()"
-                v-has="proxy.PermissionCode.tag.edit"
-                >新增标签</el-button
+                v-has="proxy.PermissionCode.article.edit"
+                >发布文章</el-button
               >
             </el-col>
           </el-row>
@@ -30,16 +30,16 @@
     </div>
     <el-card class="table-data-card">
       <template #header>
-        <span>标签列表</span>
+        <span>文章列表</span>
       </template>
       <Table
         ref="tableInfoRef"
-        :columns="tags"
+        :columns="articles"
         :fetch="loadDataList"
         :dataSource="tableData"
         :options="tableOptions"
         :extHeight="tableOptions.extHeight"
-        rowKey="tagId"
+        rowKey="articleId"
       >
         <template #slotOperation="{ index, row }">
           <div class="row-op-panel">
@@ -47,14 +47,14 @@
               class="a-link"
               href="javascript:void(0)"
               @click.prevent="showEdit(row)"
-              v-has="proxy.PermissionCode.tag.edit"
+              v-has="proxy.PermissionCode.article.edit"
               >修改</a
             >
             <a
               class="a-link"
               href="javascript:void(0)"
-              @click.prevent="delTag(row)"
-              v-has="proxy.PermissionCode.tag.del"
+              @click.prevent="delArticle(row)"
+              v-has="proxy.PermissionCode.article.del"
               >删除</a
             >
           </div>
@@ -62,18 +62,21 @@
       </Table>
     </el-card>
     <!-- 新增/修改 -->
-    <TagEdit ref="tagEditRef" @reload="loadDataList"></TagEdit>
+    <ArticleEdit
+      ref="articleEditRef"
+      @reload="loadDataList"
+    ></ArticleEdit>
   </div>
 </template>
 
 <script setup>
-import TagEdit from "./TagEdit.vue";
+import ArticleEdit from "./ArticleEdit.vue";
 import { ref, reactive, getCurrentInstance, nextTick } from "vue";
 const { proxy } = getCurrentInstance();
 
 const api = {
-  loadTag: "/content/tagList",
-  delTag: "/content/delTag",
+  loadArticle: "/post/articleList",
+  delArticle: "/post/delArticle",
 };
 
 const searchForm = ref({});
@@ -82,10 +85,11 @@ const tableOptions = ref({
   extHeight: 125,
 });
 
-const tags = [
-  { label: "标签名", prop: "tagName" },
-  { label: "颜色", prop: "tagColor" },
-  { label: "创建时间", prop: "createTime" },
+const articles = [
+  { label: "文章ID", prop: "articleId" },
+  { label: "标题", prop: "title" },
+  { label: "发布人", prop: "userName" },
+  { label: "创建时间", prop: "postTime" },
   { width: 100, label: "操作", scopedSlots: "slotOperation" },
 ];
 
@@ -98,7 +102,7 @@ const loadDataList = async () => {
   };
   Object.assign(params, searchForm.value);
   let result = await proxy.Request({
-    url: api.loadTag,
+    url: api.loadArticle,
     params,
   });
   if (!result) {
@@ -108,12 +112,12 @@ const loadDataList = async () => {
 };
 
 // 删除标签
-const delTag = (data) => {
-  proxy.Confirm(`确定要删除${data.tagName}吗？`, async () => {
+const delArticle = (data) => {
+  proxy.Confirm(`确定要删除${data.articleId}吗？`, async () => {
     let result = await proxy.Request({
-      url: api.delTag,
+      url: api.delArticle,
       params: {
-        tagId: data.tagId,
+        articleId: data.articleId,
       },
     });
     if (!result) {
@@ -125,9 +129,9 @@ const delTag = (data) => {
   });
 };
 
-const tagEditRef = ref();
+const articleEditRef = ref();
 const showEdit = (data = {}) => {
-  tagEditRef.value.showEdit(Object.assign({}, data));
+  articleEditRef.value.showEdit(Object.assign({}, data));
 };
 </script>
 

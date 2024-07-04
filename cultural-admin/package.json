@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@kangc/v-md-editor": "^2.3.18",
+    "@wangeditor/editor": "^5.1.23",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.7.2",
     "echarts": "^5.5.0",
     "element-plus": "^2.7.6",
+    "highlight.js": "^11.9.0",
     "js-md5": "^0.8.3",
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",

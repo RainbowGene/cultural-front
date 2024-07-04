@@ -29,11 +29,11 @@ const PermissionCode = {
     del: "content_tag_del",
     list:"content_tag_list",
   },
-  share: {
-    edit: "share_edit",
-    post: "share_post",
-    del: "share_del",
-    del_batch: "share_del_batch",
+  article: {
+    edit: "post_article_edit",
+    del: "post_article_del",
+    list:"post_article_list",
+    del_batch: "post_article_del_batch",
   },
   app: {
     app_update_edit: "app_update_edit",
