@@ -110,7 +110,7 @@ const route = useRoute();
 const api = {
   loadColumn: "/content/columnList",
   postArticle: "/post/postArticle", // 发文
-  updateArticle: "/post/updateArticle", // 修改文章
+  // updateArticle: "/post/updateArticle", // 修改文章
 };
 
 const markdownHeight = window.innerHeight - 80 - 60;
@@ -203,7 +203,7 @@ const submitForm = async () => {
     }
     // return console.log(params);
     let result = await proxy.Request({
-      url: params.articleId ? api.updateArticle : api.postArticle,
+      url: api.postArticle,
       params,
     });
     if (!result) {

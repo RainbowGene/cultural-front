@@ -63,6 +63,11 @@ const router = createRouter({
           name: "文章管理",
           component: () => import("@/views/post/ArticleList.vue"),
         },
+        {
+          path: "/post/book",
+          name: "电子书管理",
+          component: () => import("@/views/post/BookList.vue"),
+        },
       ],
     },
   ],

@@ -57,6 +57,7 @@ app.config.globalProperties.globalInfo = {
   // 图像
   avatarUrl: "/api/file/getAvatar/",
   imageUrl: "/api/file/getImage/",
+  bookUrl:"/api/file/getPdf/",
 };
 
 // 使用自定义指令做权限验证

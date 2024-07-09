@@ -35,12 +35,10 @@ const PermissionCode = {
     list:"post_article_list",
     del_batch: "post_article_del_batch",
   },
-  app: {
-    app_update_edit: "app_update_edit",
-    app_update_post: "app_update_post",
-    app_carousel_edit: "app_carousel_edit",
-    app_user_edit: "app_user_edit",
-    app_feedback_reply: "app_feedback_reply",
+  book :{
+    edit: "post_book_edit", // 上传电子书
+    list:"post_book_list",
+    del_batch: "post_book_op_status",
   },
 };
 

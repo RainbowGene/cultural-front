@@ -53,5 +53,5 @@ const uploadImageHandler = async (event, insertImage, files) => {
     });
 };
 </script>
-  
+
 <style lang="scss"></style>
