@@ -6,7 +6,10 @@
     :multiple="false"
     :http-request="uploadImage"
   >
-    <div class="cover-upload-btn">
+    <div
+      class="cover-upload-btn"
+      :style="{ width: width + 'px', height: height + 'px' }"
+    >
       <template v-if="localPreview">
         <img :src="localFile" />
       </template>
@@ -41,6 +44,12 @@ const props = defineProps({
   modelValue: {
     type: Object,
     default: null,
+  },
+  width: {
+    type: Number,
+  },
+  height: {
+    type: Number,
   },
 });
 

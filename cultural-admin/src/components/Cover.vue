@@ -4,7 +4,7 @@
     :style="{ width: width + 'px', height: height ? height + 'px' : 'auto' }"
   >
     <img
-      :src="proxy.globalInfo.imageUrl + cover"
+      :src="proxy.globalInfo.newImageUrl + cover"
       v-if="cover"
       style="object-fit: contain"
     />

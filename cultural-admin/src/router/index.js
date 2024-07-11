@@ -68,6 +68,11 @@ const router = createRouter({
           name: "电子书管理",
           component: () => import("@/views/post/BookList.vue"),
         },
+        {
+          path: "/post/carousel",
+          name: "轮播图管理",
+          component: () => import("@/views/post/CarouselList.vue"),
+        },
       ],
     },
   ],

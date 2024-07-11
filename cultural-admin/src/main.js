@@ -19,6 +19,7 @@ import Table from "@/components/Table.vue";
 import Cover from "@/components/Cover.vue";
 import Window from "@/components/Window.vue";
 import CoverUpload from "@/components/CoverUpload.vue";
+import NewCoverUpload from "@/components/NewCoverUpload.vue";
 import ColumnSelect from "@/components/content/ColumnSelect.vue";
 import AreaSelect from "@/components/content/AreaSelect.vue";
 import SunEditor from "@/components/content/SunEditor.vue";
@@ -38,6 +39,7 @@ app.component("Table", Table);
 app.component("Window", Window);
 app.component("Cover", Cover);
 app.component("CoverUpload", CoverUpload);
+app.component("NewCoverUpload", NewCoverUpload);
 app.component("ColumnSelect", ColumnSelect);
 app.component("AreaSelect", AreaSelect);
 app.component("SunEditor", SunEditor);
@@ -57,7 +59,8 @@ app.config.globalProperties.globalInfo = {
   // 图像
   avatarUrl: "/api/file/getAvatar/",
   imageUrl: "/api/file/getImage/",
-  bookUrl:"/api/file/getPdf/",
+  newImageUrl: "/api/file/newGetImage/",
+  bookUrl: "/api/file/getPdf/",
 };
 
 // 使用自定义指令做权限验证
