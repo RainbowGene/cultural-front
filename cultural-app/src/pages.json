@@ -1,0 +1,95 @@
+{
+  "pages": [
+    {
+      "path": "pages/index",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
+    },
+    {
+      "path": "pages/column/ColumnIndex",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
+    },
+    {
+      "path": "pages/book/BookIndex",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
+    },
+    {
+      "path": "pages/recommend/RecommendIndex",
+      "style": {
+        "navigationBarTitleText": "uni-app"
+      }
+    }
+  ],
+  "tabBar": {
+    "color": "#494949",
+    "selectedColor": "#8f60df",
+    "backgroundColor": "#fff",
+    "iconfontSrc": "/static/icon/iconfont.ttf",
+    "height": "60px",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index",
+        "text": "首页",
+        "color": "#494949",
+        "iconfont": {
+          "text": "\ue639",
+          "selectedText": "\ue639",
+          "fontSize": "22px",
+          "color": "#494949",
+          "selectedColor": "#8f60df"
+        }
+      },
+      {
+        "pagePath": "pages/column/ColumnIndex",
+        "text": "栏目",
+        "color": "#494949",
+        "iconfont": {
+          "text": "\ue62f",
+          "selectedText": "\ue62f",
+          "fontSize": "22px",
+          "color": "#494949",
+          "selectedColor": "#8f60df"
+        }
+      },
+      {
+        "pagePath": "pages/book/BookIndex",
+        "text": "电子书",
+        "color": "#494949",
+        "iconfont": {
+          "text": "\ue77b",
+          "selectedText": "\ue77b",
+          "fontSize": "22px",
+          "color": "#494949",
+          "selectedColor": "#8f60df"
+        }
+      },
+      {
+        "pagePath": "pages/recommend/RecommendIndex",
+        "text": "活动",
+        "color": "#494949",
+        "iconfont": {
+          "text": "\ue635",
+          "selectedText": "\ue635",
+          "fontSize": "22px",
+          "color": "#494949",
+          "selectedColor": "#8f60df"
+        }
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "app-plus": {
+      "bounce": "none"
+    }
+  }
+}
